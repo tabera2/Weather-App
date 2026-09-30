@@ -1,19 +1,30 @@
 import { useState } from 'react'
 import './App.css'
 import LocationSearch from "./components/LocationSearch";
-import { getCoordinates } from './services/weatherApi';
+import { getCoordinates, getCurrentWeather } from './services/weatherApi';
 
 function App() {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
+  const [weather, setWeather] = useState(null);
 
 
   const handleSearch = async (searchTerm) => {
     try {
       setError("");
+      // location name to coordinates
       const result = await getCoordinates(searchTerm);
+
       setLocation(result);
-      console.log(result);
+      //console.log(result);
+
+      //get weather info using coordinates
+      const weatherResult = await getCurrentWeather(
+        result.latitude,
+        result.longitude
+      );
+      setWeather(weatherResult);
+      console.log(weatherResult);
     } catch (error) {
       setLocation(null);
       setError(error.message);
