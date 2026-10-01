@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LocationSearch({onSearch}){
+function LocationSearch({onSearch, onUseLocation}){
     const [input, setInput] = useState("");
 
     const handleSubmit = (event) => {
@@ -22,6 +22,9 @@ function LocationSearch({onSearch}){
       />
 
       <button type="submit">Search</button>
+      <button type="button" onClick={onUseLocation}>
+        Use MY Location
+      </button>
     </form>
   );
 }
