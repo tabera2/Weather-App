@@ -11,7 +11,7 @@ export async function getCoordinates(location){
 
     const data = await response.json();
     if(!data.results || data.results.length === 0){
-        throw new Error("Location is not location.");
+        throw new Error("Location not found. Please Enter a valid location.");
     }
 
     return data.results[0];
@@ -58,6 +58,18 @@ export async function getWeatherByDate(
 
   if (!response.ok) {
     throw new Error("Unable to retrieve weather for this date range.");
+  }
+  const data = await response.json();
+  return data;
+}
+
+export async function getLocationDetails(latitude, longitude) {
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+  );
+
+  if (!response.ok) {
+    throw new Error("Unable to retrieve location details.");
   }
   const data = await response.json();
   return data;

@@ -6,7 +6,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-function DateSearch({ onSearch }) {
+function DateSearch({ onSearch, apiError }) {
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -92,6 +92,11 @@ function DateSearch({ onSearch }) {
             {error && (
                 <p className="text-sm text-destructive">
                 {error}
+                </p>
+            )}
+            {apiError && (
+                <p className="text-sm text-destructive">
+                {apiError}
                 </p>
             )}
 

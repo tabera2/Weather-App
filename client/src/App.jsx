@@ -15,6 +15,7 @@ import { exportToJSON, exportToCSV } from './utils/exportWeather';
 import {Switch} from "@/components/ui/switch"
 import { Button } from "@/components/ui/button";
 import About from "./components/About";
+import LocationMap from "./components/LocationMap";
 
 function App() {
   const [location, setLocation] = useState("");
@@ -23,6 +24,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [unit, setUnit] = useState("C");
+  const [dateSearchError, setDateSearchError] = useState("");
   const loadSearchHistory = async () =>{
   try {
     const searches = await getWeatherSearches();
@@ -104,7 +106,7 @@ const fetchWeather = async (latitude, longitude) => {
   const handleDateSearch = async (searchTerm, startDate, endDate) =>{
   try {
     setLoading(true);
-    setError("");
+    setDateSearchError("");
 
     // Validate location and get coordinates
     const result = await getCoordinates(searchTerm);
@@ -132,7 +134,7 @@ const fetchWeather = async (latitude, longitude) => {
     //console.log("Date range weather:", savedSearch);
 
   } catch (error) {
-    setError(error.message);
+    setDateSearchError(error.message);
   } finally {
     setLoading(false);
   }
@@ -190,7 +192,7 @@ const handleUpdateSearch = async (
   return (
     <main className="min-h-screen bg-sky-50/50 text-foreground">
     <header className="border-b bg-sky-600 text-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
             Windy
@@ -218,7 +220,8 @@ const handleUpdateSearch = async (
         </div>
       </div>
      </header>
-      <div className="mx-auto max-w-6xl space-y-10 px-8 py-10">
+
+      <div className="mx-auto max-w-7xl space-y-10 px-6 py-10 lg:px-8">
         <LocationSearch onSearch={handleSearch} onUseLocation={handleUseLocation} />
         {loading && <p>Loading weather...</p>}
         {error && <p>{error}</p>}
@@ -234,16 +237,29 @@ const handleUpdateSearch = async (
             </p>
           </div>
         )}
-        {weather && (
+        {weather && location && (
+        <div className="grid gap-6 lg:grid-cols-2">
           <WeatherCard
             weather={weather}
             unit={unit}
           />
-        )}
-        {weather && <Forecast weather={weather}
+
+          <LocationMap
+            location={location}
+          />
+        </div>
+      )}
+
+      {weather && (
+        <Forecast
+          weather={weather}
           unit={unit}
-        />}
-        <DateSearch onSearch={handleDateSearch}/>
+        />
+      )}
+        <DateSearch 
+        onSearch={handleDateSearch}
+        apiError={dateSearchError}
+        />
         <SearchHistory 
         searches={searchHistory}
         onDelete={handleDeleteSearch}

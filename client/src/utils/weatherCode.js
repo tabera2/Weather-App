@@ -23,7 +23,7 @@ export function getWeatherCondition(code) {
   if (code === 45 || code === 48){
     return {
       description: "Foggy",
-      icon: "☁️",
+      icon: "🌫️",
     };
   }
 

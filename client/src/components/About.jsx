@@ -17,6 +17,9 @@ function About() {
             weather by date range, save and manage weather requests, and
             export saved weather data.
           </p>
+          <p className="mt-3 text-sm font-medium">
+            Developed by Tsiyon Abera
+            </p>
         </div>
 
         <div>
@@ -25,10 +28,11 @@ function About() {
           </h2>
 
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            The Product Manager Accelerator Program supports product
-            management professionals at different stages of their careers,
-            from students pursuing entry-level opportunities to experienced
-            product leaders.
+            The Product Manager Accelerator Program is designed to support 
+            PM professionals through every stage of their careers. From students 
+            looking for entry-level jobs to Directors looking to take on a leadership 
+            role, our program has helped over hundreds of students fulfill 
+            their career aspirations.
           </p>
 
           <p className="mt-3 text-sm leading-6 text-muted-foreground">

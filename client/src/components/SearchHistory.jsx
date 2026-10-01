@@ -53,7 +53,7 @@ function SearchHistory({ searches, onDelete, onUpdate, unit }) {
         </h2>
 
         <p className="text-sm text-muted-foreground">
-          Your saved date-range weather searches.
+          Your saved weather searches.
         </p>
       </div>
 
