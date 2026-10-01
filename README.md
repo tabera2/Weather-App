@@ -4,6 +4,10 @@ Windy is a full-stack weather application that allows users to search for curren
 
 The application was developed by **Tsiyon Abera** as part of the Product Manager Accelerator Software Engineering assessment.
 
+## Live Application
+
+[View Windy Live](https://windy-bice.vercel.app/)
+
 ## Preview
 ![Windy Weather Application](demo/windy-demo.gif)
 
