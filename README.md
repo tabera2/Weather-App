@@ -4,6 +4,9 @@ Windy is a full-stack weather application that allows users to search for curren
 
 The application was developed by **Tsiyon Abera** as part of the Product Manager Accelerator Software Engineering assessment.
 
+## Preview
+![Windy Weather Application](demo/windy-demo.gif)
+
 ## Features
 
 - Search for weather by city or location
