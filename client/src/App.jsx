@@ -205,7 +205,9 @@ const handleUpdateSearch = async (
         </label>
         <span>°F</span>
       </div>
-      <h1>Windy</h1>
+      <h1 className="text-4xl font-bold">
+        Windy
+      </h1>
       <p>Real-time weather information for any location.</p>
 
       <LocationSearch onSearch={handleSearch} onUseLocation={handleUseLocation} />
