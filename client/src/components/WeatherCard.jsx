@@ -1,20 +1,29 @@
 import { convertTemperature } from "../utils/convertUnits";
+import { getWeatherCondition } from "../utils/weatherCode";
 
 function WeatherCard({weather, unit}){
+    const condition = getWeatherCondition(weather.current.weather_code);
+
     return(
         <div>
             <h2>Current Weather</h2>
             <p>
-                Temperature: {weather.current.temperature_2m}
+                {condition.icon} {condition.description}
+            </p>
+            <p>
+                Temperature: {" "}
                 {convertTemperature(
                 weather.current.temperature_2m,
-                temperatureUnit
-                )}°{temperatureUnit}
+                unit
+                )}°{unit}
             </p>
 
             <p>
-                Feels like: {weather.current.apparent_temperature}
-                {weather.current_units.temperature_2m}
+                Feels like: {" "}
+                {convertTemperature(
+                weather.current.temperature_2m,
+                unit
+                )}°{unit}
             </p>
 
             <p>

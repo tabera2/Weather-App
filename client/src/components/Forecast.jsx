@@ -1,7 +1,7 @@
 import { getWeatherCondition } from "../utils/weatherCode";
 import { convertTemperature } from "../utils/convertUnits";
 
-function Forecast({ weather, temperatureUnit }) {
+function Forecast({ weather, unit }) {
   return (
     <div>
       <h2>5-Day Forecast</h2>
@@ -22,18 +22,18 @@ function Forecast({ weather, temperatureUnit }) {
                 High:{" "}
                 {convertTemperature(
                   weather.daily.temperature_2m_max[index],
-                  temperatureUnit
+                  unit
                 )}
-                °{temperatureUnit}
+                °{unit}
               </p>
 
               <p>
                 Low:{" "}
                 {convertTemperature(
                   weather.daily.temperature_2m_min[index],
-                  temperatureUnit
+                  unit
                 )}
-                °{temperatureUnit}
+                °{unit}
               </p>
 
               <p>

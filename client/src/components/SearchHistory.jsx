@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { convertTemperature } from "../utils/convertUnits";
 
-function SearchHistory({ searches, onDelete, onUpdate }){
+function SearchHistory({ searches, onDelete, onUpdate, unit }){
     const [editingId, setEditingId] = useState(null);
     const [editLocation, setEditLocation] = useState("");
     const [editStartDate, setEditStartDate] = useState("");
@@ -87,8 +88,19 @@ function SearchHistory({ searches, onDelete, onUpdate }){
             {search.weather_data.time.map((date, index) => (
                 <div key={date}>
                 <p>
-                    {date}: High {search.weather_data.temperature_2m_max[index]}°,
-                    Low {search.weather_data.temperature_2m_min[index]}°
+                    {date}: High{" "}{
+                        convertTemperature(
+                            search.weather_data.temperature_2m_max[index],
+                            unit
+                        )}
+                        °{unit},
+
+                    Low {" "}{
+                        convertTemperature(
+                            search.weather_data.temperature_2m_min[index],
+                            unit
+                        )
+                    }°{unit},
                 </p>
                 </div>
             ))}

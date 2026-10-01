@@ -19,7 +19,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
-  const [temperatureUnit, setTemperatureUnit] = useState("F");
+  const [unit, setUnit] = useState("C");
   const loadSearchHistory = async () =>{
   try {
     const searches = await getWeatherSearches();
@@ -63,7 +63,7 @@ const fetchWeather = async (latitude, longitude) => {
       longitude
   );
   setWeather(weatherResult);
-  console.log(weatherResult);
+  //console.log(weatherResult);
 };
 
   const handleUseLocation =() =>{
@@ -82,8 +82,8 @@ const fetchWeather = async (latitude, longitude) => {
           const locationResult = await getLocation(latitude, longitude);
           setLocation(locationResult);
 
-          console.log("Latitude:", latitude);
-          console.log("Longitude: ", longitude);
+          //console.log("Latitude:", latitude);
+          //console.log("Longitude: ", longitude);
           //console.log("cit")
           await fetchWeather(latitude, longitude);
         }
@@ -125,8 +125,8 @@ const fetchWeather = async (latitude, longitude) => {
   });
   await loadSearchHistory();
 
-    console.log("Date range weather:", dateWeather);
-    console.log("Date range weather:", savedSearch);
+    //console.log("Date range weather:", dateWeather);
+    //console.log("Date range weather:", savedSearch);
 
   } catch (error) {
     setError(error.message);
@@ -187,18 +187,24 @@ const handleUpdateSearch = async (
   return (
     <main>
       <div className="unit-toggle">
-      <button
-        onClick={() =>{
-            if(temperatureUnit === "F"){
-              setTemperatureUnit("C")
-            }else{
-              setTemperatureUnit("F")
-            }
-        }}
-          >
-        °{temperatureUnit}
-      </button>
-    </div>
+        <span>°C</span>
+
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={unit === "F"}
+            onChange={(event) => {
+              if (event.target.checked) {
+                setUnit("F");
+              } else {
+                setUnit("C");
+              }
+            }}
+          />
+          <span className="slider"></span>
+        </label>
+        <span>°F</span>
+      </div>
       <h1>Windy</h1>
       <p>Real-time weather information for any location.</p>
 
@@ -212,24 +218,23 @@ const handleUpdateSearch = async (
           <p>{location.state && `${location.state},`}
             {location.country}
           </p>
-          <p>Latitude: {location.latitude}</p>
-          <p>Longitude: {location.longitude}</p>
         </div>
       )}
       {weather && (
         <WeatherCard
           weather={weather}
-          temperatureUnit={temperatureUnit}
+          unit={unit}
         />
       )}
       {weather && <Forecast weather={weather}
-        temperatureUnit={temperatureUnit}
+        unit={unit}
       />}
       <DateSearch onSearch={handleDateSearch}/>
       <SearchHistory 
       searches={searchHistory}
       onDelete={handleDeleteSearch}
       onUpdate={handleUpdateSearch}
+      unit={unit}
        />
        <button onClick={()=> exportToJSON(searchHistory)}>Export JSON</button>
        <button onClick={()=> exportToCSV(searchHistory)}>Export CSV</button>
