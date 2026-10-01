@@ -1,17 +1,15 @@
-import {getWeatherCondition} from "../utils/weatherCode"
-//import { getWeatherCondition } from "../utils/weatherCode";
+import { getWeatherCondition } from "../utils/weatherCode";
+import { convertTemperature } from "../utils/convertUnits";
 
-function Forecast({weather}) {
+function Forecast({ weather, temperatureUnit }) {
   return (
     <div>
       <h2>5-Day Forecast</h2>
-
       <div>
         {weather.daily.time.map((date, index) => {
           const condition = getWeatherCondition(
             weather.daily.weather_code[index]
           );
-
           return (
             <div key={date}>
               <h3>{date}</h3>
@@ -21,13 +19,21 @@ function Forecast({weather}) {
               </p>
 
               <p>
-                High: {weather.daily.temperature_2m_max[index]}
-                {weather.daily_units.temperature_2m_max}
+                High:{" "}
+                {convertTemperature(
+                  weather.daily.temperature_2m_max[index],
+                  temperatureUnit
+                )}
+                °{temperatureUnit}
               </p>
 
               <p>
-                Low: {weather.daily.temperature_2m_min[index]}
-                {weather.daily_units.temperature_2m_min}
+                Low:{" "}
+                {convertTemperature(
+                  weather.daily.temperature_2m_min[index],
+                  temperatureUnit
+                )}
+                °{temperatureUnit}
               </p>
 
               <p>

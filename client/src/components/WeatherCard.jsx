@@ -1,10 +1,15 @@
-function WeatherCard({weather}){
+import { convertTemperature } from "../utils/convertUnits";
+
+function WeatherCard({weather, unit}){
     return(
         <div>
             <h2>Current Weather</h2>
             <p>
                 Temperature: {weather.current.temperature_2m}
-                {weather.current_units.temperature_2m}
+                {convertTemperature(
+                weather.current.temperature_2m,
+                temperatureUnit
+                )}°{temperatureUnit}
             </p>
 
             <p>
