@@ -1,4 +1,10 @@
-import {useState} from "react";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card";
 
 function DateSearch({ onSearch }) {
   const [location, setLocation] = useState("");
@@ -21,47 +27,84 @@ function DateSearch({ onSearch }) {
   };
 
   return (
-    <div>
-      <h2>Weather by Date Range</h2>
+    <section>
+        <div className="mb-4">
+        <h2 className="text-xl font-semibold">
+            Weather by Date Range
+        </h2>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Location</label>
-
-          <input
-            type="text"
-            value={location}
-            onChange={(event) => setLocation(event.target.value)}
-            placeholder="Enter a city"
-          />
+        <p className="text-sm text-muted-foreground">
+            Search weather for a specific location and date range.
+        </p>
         </div>
 
-        <div>
-          <label>Start Date</label>
+        <Card>
+        <CardContent className="py-6">
+            <form
+            onSubmit={handleSubmit}
+            className="space-y-5"
+            >
+            <div>
+                <label className="mb-2 block text-sm font-medium">
+                Location
+                </label>
 
-          <input
-            type="date"
-            value={startDate}
-            onChange={(event) => setStartDate(event.target.value)}
-          />
-        </div>
+                <Input
+                type="text"
+                value={location}
+                onChange={(event) =>
+                    setLocation(event.target.value)
+                }
+                placeholder="Enter a city"
+                />
+            </div>
 
-        <div>
-          <label>End Date</label>
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                <label className="mb-2 block text-sm font-medium">
+                    Start Date
+                </label>
 
-          <input
-            type="date"
-            value={endDate}
-            onChange={(event) => setEndDate(event.target.value)}
-          />
-        </div>
-        {error && <p>{error}</p>}
-        <button type="submit">
-          Get Weather
-        </button>
-      </form>
-    </div>
-  );
+                <Input
+                    type="date"
+                    value={startDate}
+                    onChange={(event) =>
+                    setStartDate(event.target.value)
+                    }
+                />
+                </div>
+
+                <div>
+                <label className="mb-2 block text-sm font-medium">
+                    End Date
+                </label>
+
+                <Input
+                    type="date"
+                    value={endDate}
+                    onChange={(event) =>
+                    setEndDate(event.target.value)
+                    }
+                />
+                </div>
+            </div>
+
+            {error && (
+                <p className="text-sm text-destructive">
+                {error}
+                </p>
+            )}
+
+            <div className="flex justify-end">
+                <Button type="submit">
+                Search & Save
+                </Button>
+            </div>
+            </form>
+        </CardContent>
+        </Card>
+    </section>
+);
 }
 
 export default DateSearch;

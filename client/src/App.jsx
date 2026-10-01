@@ -12,6 +12,9 @@ import DateSearch from './components/DateSearch';
 import { saveWeatherSearch, getWeatherSearches, deleteWeatherSearch, updateWeatherSearch} from "./services/weatherDatabase";
 import SearchHistory from './components/SearchHistory';
 import { exportToJSON, exportToCSV } from './utils/exportWeather';
+import {Switch} from "@/components/ui/switch"
+import { Button } from "@/components/ui/button";
+import About from "./components/About";
 
 function App() {
   const [location, setLocation] = useState("");
@@ -185,61 +188,99 @@ const handleUpdateSearch = async (
 
 
   return (
-    <main>
-      <div className="unit-toggle">
-        <span>°C</span>
-
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={unit === "F"}
-            onChange={(event) => {
-              if (event.target.checked) {
-                setUnit("F");
-              } else {
-                setUnit("C");
-              }
-            }}
-          />
-          <span className="slider"></span>
-        </label>
-        <span>°F</span>
-      </div>
-      <h1 className="text-4xl font-bold">
-        Windy
-      </h1>
-      <p>Real-time weather information for any location.</p>
-
-      <LocationSearch onSearch={handleSearch} onUseLocation={handleUseLocation} />
-      {loading && <p>Loading weather...</p>}
-      {error && <p>{error}</p>}
-      {location && (
+    <main className="min-h-screen bg-sky-50/50 text-foreground">
+    <header className="border-b bg-sky-600 text-white">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-6">
         <div>
-          <h2>{location.name}</h2>
-
-          <p>{location.state && `${location.state},`}
-            {location.country}
+          <h1 className="text-3xl font-bold tracking-tight">
+            Windy
+          </h1>
+          <p className="mt-1 text-sm text-sky-100">
+            Weather at a glance
           </p>
         </div>
-      )}
-      {weather && (
-        <WeatherCard
-          weather={weather}
+
+        <div className="flex items-center gap-3">
+          <span className={unit === "C" ? "font-semibold" : "text-sky-200"}>
+            °C
+          </span>
+
+          <Switch
+            checked={unit === "F"}
+            onCheckedChange={(checked) => {
+              setUnit(checked ? "F" : "C");
+            }}
+          />
+
+          <span className={unit === "F" ? "font-semibold" : "text-sky-200"}>
+            °F
+          </span>
+        </div>
+      </div>
+     </header>
+      <div className="mx-auto max-w-6xl space-y-10 px-8 py-10">
+        <LocationSearch onSearch={handleSearch} onUseLocation={handleUseLocation} />
+        {loading && <p>Loading weather...</p>}
+        {error && <p>{error}</p>}
+        {location && (
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {location.name}
+            </h2>
+
+            <p className="text-sm text-muted-foreground">
+              {location.state && `${location.state}, `}
+              {location.country}
+            </p>
+          </div>
+        )}
+        {weather && (
+          <WeatherCard
+            weather={weather}
+            unit={unit}
+          />
+        )}
+        {weather && <Forecast weather={weather}
           unit={unit}
-        />
-      )}
-      {weather && <Forecast weather={weather}
+        />}
+        <DateSearch onSearch={handleDateSearch}/>
+        <SearchHistory 
+        searches={searchHistory}
+        onDelete={handleDeleteSearch}
+        onUpdate={handleUpdateSearch}
         unit={unit}
-      />}
-      <DateSearch onSearch={handleDateSearch}/>
-      <SearchHistory 
-      searches={searchHistory}
-      onDelete={handleDeleteSearch}
-      onUpdate={handleUpdateSearch}
-      unit={unit}
-       />
-       <button onClick={()=> exportToJSON(searchHistory)}>Export JSON</button>
-       <button onClick={()=> exportToCSV(searchHistory)}>Export CSV</button>
+        />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-medium">
+              Export Weather Data
+            </h3>
+
+            <p className="text-sm text-muted-foreground">
+              Download your saved weather searches.
+            </p>
+          </div>
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => exportToJSON(searchHistory)}
+              disabled={searchHistory.length === 0}
+            >
+              Export JSON
+            </Button>
+
+            <Button
+              variant="outline"
+              onClick={() => exportToCSV(searchHistory)}
+              disabled={searchHistory.length === 0}
+            >
+              Export CSV
+            </Button>
+          </div>
+        </div>
+          <About />
+      </div>
     </main>
   );
 }
